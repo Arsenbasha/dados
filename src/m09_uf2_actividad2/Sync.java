@@ -25,7 +25,7 @@ public class Sync {
      *
      * @param dado
      */
-    public synchronized void recogerDado(int dado) {
+    public synchronized void recogerDado(int tirada, int dado) {
 
         if (Thread.currentThread().getName().equals("dado1")) {
 
@@ -38,16 +38,11 @@ public class Sync {
             }
             if (arrayList.size() < 250) {
                 arrayList.add(dado);
-                System.out.println("Numero dado 1: " + dado);
-               
-            } else {
-                System.out.println("array llena");
-                Thread.interrupted();
+                System.out.println("Numero dado 1: " + dado + " Tirada " + tirada);
             }
             Turnodado1 = false;
 
         } else if (Thread.currentThread().getName().equals("dado2")) {
-
             while (Turnodado1) {
                 try {
                     wait();
@@ -57,18 +52,31 @@ public class Sync {
             }
             if (arrayList.size() < 250) {
                 arrayList.add(dado);
-                System.out.println("Numero dado 2: " + dado);
+                System.out.println("Numero dado 2: " + dado + " Tirada " + tirada);
                 System.out.println(arrayList.toString());
                 System.out.println(arrayList.size());
-            } else {
-                System.out.println("array llena");
-                Thread.interrupted();
             }
             Turnodado1 = true;
 
         }
-        notify();
+        int pos;
+        int valor;
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i) % 2 != 0) {
+                valor = arrayList.get(i);
+                pos = i;
+                for (int j = pos + 1; j < arrayList.size(); j++) {
+                    if (arrayList.get(j) == valor) {
+                        arrayList.remove(i);
+                        arrayList.add(i, valor + valor);
+                        arrayList.remove(j);
+                    }
 
+                }
+            }
+        }
+        System.out.println(arrayList.toString());
+        notify();
     }
 
     /**
