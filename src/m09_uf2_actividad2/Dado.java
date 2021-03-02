@@ -35,7 +35,7 @@ public class Dado implements Runnable {
      */
     @Override
     public void run() {
-        while (cont < 300) {
+        while (cont < 300 && sync.arrayList.size()<250) {
             try {
                 Thread.sleep(100);
                 int numero = (int) (Math.random() * 6 + 1);
