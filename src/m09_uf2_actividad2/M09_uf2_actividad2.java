@@ -5,6 +5,9 @@
  */
 package m09_uf2_actividad2;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author arsenbasha
@@ -22,9 +25,18 @@ public class M09_uf2_actividad2 {
         Dado d2 = new Dado(sync);
 
         Thread dado1 = new Thread(d1, "dado1");
-        Thread dado2 = new Thread(d2,"dado2");
+        Thread dado2 = new Thread(d2, "dado2");
         dado1.start();
         dado2.start();
+
+        try {
+            dado1.join();
+            dado2.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(M09_uf2_actividad2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(sync.arrayList.toString());
+
     }
 
 }

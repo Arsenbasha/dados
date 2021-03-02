@@ -35,17 +35,14 @@ public class Dado implements Runnable {
      */
     @Override
     public void run() {
-       
-        while (cont < 300 && sync.arrayList.size()<250) {
-            try {
-                Thread.sleep(5);
+
+        while (cont<300) {
+        
+               
                 int numero = (int) (Math.random() * 6 + 1);
-                sync.recogerDado(cont ,numero);
+                sync.recogerDado(cont, numero);
                 cont++;
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Dado.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
         }
-        System.out.println("El "+Thread.currentThread().getName()+" se ha tirado "+cont+" veces");
     }
 }

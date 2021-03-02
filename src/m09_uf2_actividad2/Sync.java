@@ -38,7 +38,17 @@ public class Sync {
             }
             if (arrayList.size() < 250) {
                 arrayList.add(dado);
-                System.out.println("Numero dado 1: " + dado + " Tirada " + tirada);
+                System.out.println("Numero dado 1: " + dado);
+            } else {
+                if (tirada < 300) {
+                    for (int i = 200; i < arrayList.size(); i++) {
+                        if (arrayList.get(i) % 2 != 0) {
+                            int numero= (int) (Math.random() * 6 + 1);
+                            arrayList.remove(i);
+                            arrayList.add(i, numero);
+                        }
+                    }
+                }
             }
             Turnodado1 = false;
 
@@ -52,58 +62,35 @@ public class Sync {
             }
             if (arrayList.size() < 250) {
                 arrayList.add(dado);
-                System.out.println("Numero dado 2: " + dado + " Tirada " + tirada);
-                System.out.println(arrayList.toString());
-                System.out.println(arrayList.size());
+                System.out.println("Numero dado 2: " + dado);
+            } else {
+                if (tirada < 300) {
+                    for (int i = 200; i < arrayList.size(); i++) {
+                        if (arrayList.get(i) % 2 != 0) {
+                            int numero= (int) (Math.random() * 6 + 1);
+                            arrayList.remove(i);
+                            arrayList.add(i, numero);
+                        }
+                    }
+                }
             }
             Turnodado1 = true;
-
         }
         int pos;
         int valor;
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i) % 2 != 0) {
                 valor = arrayList.get(i);
-                pos = i;
-                for (int j = pos + 1; j < arrayList.size(); j++) {
+                pos = i + 1;
+                for (int j = pos; j < arrayList.size(); j++) {
                     if (arrayList.get(j) == valor) {
                         arrayList.remove(i);
                         arrayList.add(i, valor + valor);
                         arrayList.remove(j);
                     }
-
                 }
             }
         }
-        System.out.println(arrayList.toString());
         notify();
     }
-
-    /**
-     * mientras no tenga el turno se esperará hasta que sea su turno y
-     * mostraremos el resutaldo por pantalla junto con la array.
-     *
-     * @param dado
-     *
-     * public synchronized void dadoDos(int dado) {
-     *
-     * while (Turnodado1 == true) { try { wait(); } catch (InterruptedException
-     * e) { System.out.println("Error al parar dado 2 "); } }
-     *
-     * if (arrayList.size() < 250) {
-     *
-     * // if ((numero % 2 != 0) && (arrayList.get(arrayList.size() - 1) % 2 !=
-     * 0)) { // int aux = arrayList.get(arrayList.size() - 1) + numero; //
-     * arrayList.remove(arrayList.size() - 1); arrayList.add(dado);
-     *
-     * // } else { // arrayList.add(numero); // dadoDos(numero); // // }
-     * System.out.println("Numero dado 2: " + dado);
-     * System.out.println(arrayList.toString());
-     * System.out.println("--------------------------------"); notifyAll();
-     * Turnodado1 = true;
-     *
-     * } else { System.out.println("array llena"); }
-     *
-     * }
-     */
 }
